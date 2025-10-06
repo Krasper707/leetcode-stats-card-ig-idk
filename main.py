@@ -1,4 +1,4 @@
-# main.py
+import time
 from fastapi import FastAPI, HTTPException
 from typing import Optional
 
@@ -6,6 +6,8 @@ from fastapi.responses import Response
 
 from leetcode_fetcher import fetch_leetcode_stats
 from card_renderer import render_svg_card, THEMES
+CACHE = {}
+CACHE_DURATION_SECONDS = 7200 
 
 app = FastAPI(
     title="LeetCode Stats API",
@@ -18,6 +20,7 @@ async def get_user_stats_card(username: str, theme: Optional[str] = "default"):
     An endpoint to get a LeetCode stats SVG card for a specific user.
     Supports themes via the ?theme= query parameter (e.g., ?theme=amber).
     """
+    
     stats = fetch_leetcode_stats(username)
     
     if not stats or not stats.get('matchedUser'):
