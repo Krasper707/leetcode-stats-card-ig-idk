@@ -20,6 +20,9 @@ Here's how it looks with the `arch` theme:
   />
 </p>
 
+```
+![LeetCode Stats](https://leetcode-stats-card-ig-idk.vercel.app/api/stats/YOUR_USERNAME?theme=arch)
+```
 ## 🔥 Features
 
 - **Dynamically Generated:** Your stats are always up-to-date.
