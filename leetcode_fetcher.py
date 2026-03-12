@@ -4,23 +4,25 @@ import json
 LEETCODE_API_URL = "https://leetcode.com/graphql"
 
 STATS_QUERY = """
-query getUserProfile($username: String!) {
-    allQuestionsCount {
+query userPublicProfile($username: String!) {
+  matchedUser(username: $username) {
+  username
+    profile {
+      ranking
+    }
+    submitStatsGlobal {
+      acSubmissionNum {
         difficulty
         count
+      }
     }
-    matchedUser(username: $username) {
-        username
-        submitStats: submitStatsGlobal {
-            acSubmissionNum {
-                difficulty
-                count
-            }
-        }
-    }
+  }
+  allQuestionsCount {
+    difficulty
+    count
+  }
 }
 """
-
 def fetch_leetcode_stats(username: str):
     """
     Sends the query to LeetCode's API to fetch user stats.

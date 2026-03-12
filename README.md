@@ -45,7 +45,7 @@ This method is recommended because it prevents the "white flash" on page load by
 
 <p align="center">
   <img
-    src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=1"
+    src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=2"
     alt="My LeetCode Stats"
     style="background-color: #0C0C0C; border-radius: 6px;"
   />
@@ -74,20 +74,20 @@ To update your README, copy the Markdown below. I have organized them into categ
 
 | Theme Name      | Preview                                                                                                                                                                       |
 | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Default**     | `?theme=default` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=default&v=1" width="400" alt="Default Theme"/>                      |
-| **Arch**        | `?theme=arch` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=1" width="400" alt="Arch Theme"/>                               |
-| **Dracula**     | `?theme=dracula` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=dracula&v=1" width="400" alt="Dracula Theme"/>                      |
-| **Nord**        | `?theme=nord` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=nord&v=1" width="400" alt="Nord Theme"/>                               |
-| **Cyberpunk**   | `?theme=cyberpunk` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=cyberpunk&v=1" width="400" alt="Cyberpunk Theme"/>                |
-| **Synthwave**   | `?theme=synthwave` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=synthwave&v=1" width="400" alt="Synthwave Theme"/>                |
-| **Gruvbox**     | `?theme=gruvbox` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=gruvbox&v=1" width="400" alt="Gruvbox Theme"/>                      |
-| **Monokai**     | `?theme=monokai` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=monokai&v=1" width="400" alt="Monokai Theme"/>                      |
-| **Ocean**       | `?theme=ocean` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=ocean&v=1" width="400" alt="Ocean Theme"/>                            |
-| **Amber**       | `?theme=amber` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=amber&v=1" width="400" alt="Amber Theme"/>                            |
-| **Matrix**      | `?theme=matrix` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=matrix&v=1" width="400" alt="Matrix Theme"/>                         |
-| **Rose Pine**   | `?theme=rose-pine` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=rose-pine&v=1" width="400" alt="Rose Pine Theme"/>                |
-| **Solarized**   | `?theme=solarized-dark` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=solarized-dark&v=1" width="400" alt="Solarized Dark Theme"/> |
-| **Retro White** | `?theme=retro-white` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=retro-white&v=1" width="400" alt="Retro White Theme"/>          |
+| **Default**     | `?theme=default` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=default&v=2" width="400" alt="Default Theme"/>                      |
+| **Arch**        | `?theme=arch` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=2" width="400" alt="Arch Theme"/>                               |
+| **Dracula**     | `?theme=dracula` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=dracula&v=2" width="400" alt="Dracula Theme"/>                      |
+| **Nord**        | `?theme=nord` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=nord&v=2" width="400" alt="Nord Theme"/>                               |
+| **Cyberpunk**   | `?theme=cyberpunk` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=cyberpunk&v=2" width="400" alt="Cyberpunk Theme"/>                |
+| **Synthwave**   | `?theme=synthwave` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=synthwave&v=2" width="400" alt="Synthwave Theme"/>                |
+| **Gruvbox**     | `?theme=gruvbox` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=gruvbox&v=2" width="400" alt="Gruvbox Theme"/>                      |
+| **Monokai**     | `?theme=monokai` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=monokai&v=2" width="400" alt="Monokai Theme"/>                      |
+| **Ocean**       | `?theme=ocean` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=ocean&v=2" width="400" alt="Ocean Theme"/>                            |
+| **Amber**       | `?theme=amber` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=amber&v=2" width="400" alt="Amber Theme"/>                            |
+| **Matrix**      | `?theme=matrix` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=matrix&v=2" width="400" alt="Matrix Theme"/>                         |
+| **Rose Pine**   | `?theme=rose-pine` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=rose-pine&v=2" width="400" alt="Rose Pine Theme"/>                |
+| **Solarized**   | `?theme=solarized-dark` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=solarized-dark&v=2" width="400" alt="Solarized Dark Theme"/> |
+| **Retro White** | `?theme=retro-white` <br/> <img src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=retro-white&v=2" width="400" alt="Retro White Theme"/>          |
 
 ## 🛠️ Running Locally
 

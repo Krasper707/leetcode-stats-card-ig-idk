@@ -71,61 +71,107 @@ THEMES = {
 env = Environment(loader=FileSystemLoader('templates'))
 template = env.get_template('stats_card.svg')
 
-def parse_stats_data(stats: dict) -> dict:
-    """
-    Parses the raw API data and pre-formats it for the Terminal SVG.
-    """
-    # 1. Extract Rank (Handle potential missing data)
-    profile = stats.get('matchedUser', {}).get('profile', {})
-    rank = profile.get('ranking', 'N/A')
+# def parse_stats_data(stats: dict) -> dict:
+#     """
+#     Parses the raw API data and pre-formats it for the Terminal SVG.
+#     """
+#     # 1. Extract Rank (Handle potential missing data)
+#     profile = stats.get('matchedUser', {}).get('profile', {})
+#     rank = profile.get('ranking', 'N/A')
     
-    # Format rank with commas for readability (e.g., 1,234,567)
-    if isinstance(rank, int):
-        rank_str = f"{rank:,}"
-    else:
-        rank_str = str(rank)
+#     # Format rank with commas for readability (e.g., 1,234,567)
+#     if isinstance(rank, int):
+#         rank_str = f"{rank:,}"
+#     else:
+#         rank_str = str(rank)
 
-    # 2. Extract total question counts from API
-    # LeetCode usually returns a list of dicts: [{'difficulty': 'All', 'count': 3000}, ...]
-    total_questions_list = stats.get('allQuestionsCount', [])
-    total_questions_data = {item['difficulty']: item['count'] for item in total_questions_list}
+#     # 2. Extract total question counts from API
+#     # LeetCode usually returns a list of dicts: [{'difficulty': 'All', 'count': 3000}, ...]
+#     total_questions_list = stats.get('allQuestionsCount', [])
+#     total_questions_data = {item['difficulty']: item['count'] for item in total_questions_list}
     
-    # 3. Extract user's solved counts
-    # Note: LeetCode API usually nests this under 'submitStatsGlobal' or 'submitStats'
-    user_stats = stats.get('matchedUser', {}).get('submitStatsGlobal', {}).get('acSubmissionNum', [])
-    if not user_stats: # Fallback for different API structures
-         user_stats = stats.get('matchedUser', {}).get('submitStats', {}).get('acSubmissionNum', [])
+#     # 3. Extract user's solved counts
+#     # Note: LeetCode API usually nests this under 'submitStatsGlobal' or 'submitStats'
+#     user_stats = stats.get('matchedUser', {}).get('submitStatsGlobal', {}).get('acSubmissionNum', [])
+#     if not user_stats: # Fallback for different API structures
+#          user_stats = stats.get('matchedUser', {}).get('submitStats', {}).get('acSubmissionNum', [])
          
-    solved_data = {item['difficulty']: item['count'] for item in user_stats}
+#     solved_data = {item['difficulty']: item['count'] for item in user_stats}
 
-    # 4. Get the raw numbers (integers)
-    easy_solved = solved_data.get("Easy", 0)
-    medium_solved = solved_data.get("Medium", 0)
-    hard_solved = solved_data.get("Hard", 0)
-    total_solved = solved_data.get("All", 0)
+#     # 4. Get the raw numbers (integers)
+#     easy_solved = solved_data.get("Easy", 0)
+#     medium_solved = solved_data.get("Medium", 0)
+#     hard_solved = solved_data.get("Hard", 0)
+#     total_solved = solved_data.get("All", 0)
+
+#     return {
+#         "username": stats['matchedUser']['username'],
+#         "rank": rank_str,
+
+#         # Integers for SVG Bar math: (solved * 15 // total)
+#         "easy_solved_num": easy_solved,
+#         "medium_solved_num": medium_solved,
+#         "hard_solved_num": hard_solved,
+        
+#         "total_easy": total_questions_data.get("Easy", 1), # Avoid division by zero
+#         "total_medium": total_questions_data.get("Medium", 1),
+#         "total_hard": total_questions_data.get("Hard", 1),
+#         "total_questions": total_questions_data.get("All", 1),
+
+#         # Formatted strings for display
+#         # We use :03d or :>3 to ensure numbers look like '042' or ' 42' for terminal alignment
+#         "easy_solved_str": f"{easy_solved:03d}",
+#         "medium_solved_str": f"{medium_solved:03d}",
+#         "hard_solved_str": f"{hard_solved:03d}",
+#         "total_solved_str": str(total_solved),
+#     }
+
+def parse_stats_data(stats: dict) -> dict:
+    # 1. Safely get matchedUser
+    user_data = stats.get('matchedUser')
+    if not user_data:
+        user_data = {}
+
+    # 2. Get the username
+    # If the API didn't return it, we'll handle it gracefully
+    username = user_data.get('username', 'Unknown User')
+
+    # 3. Safe Rank extraction
+    profile = user_data.get('profile', {})
+    rank = profile.get('ranking', 'N/A')
+    rank_str = f"{rank:,}" if isinstance(rank, int) else str(rank)
+
+    # 4. Safe Submission Stats (The part that caused the KeyError before)
+    # Check both Global and regular submitStats
+    submit_obj = user_data.get('submitStatsGlobal') or user_data.get('submitStats') or {}
+    ac_submissions = submit_obj.get('acSubmissionNum', [])
+    solved_map = {item['difficulty']: item['count'] for item in ac_submissions}
+
+    # 5. Safe Total Questions
+    total_questions_list = stats.get('allQuestionsCount', [])
+    total_map = {item['difficulty']: item['count'] for item in total_questions_list}
+
+    # Get the raw numbers with fallbacks
+    easy_solved = solved_map.get("Easy", 0)
+    medium_solved = solved_map.get("Medium", 0)
+    hard_solved = solved_map.get("Hard", 0)
+    total_solved = solved_map.get("All", 0)
 
     return {
-        "username": stats['matchedUser']['username'],
+        "username": username,
         "rank": rank_str,
-
-        # Integers for SVG Bar math: (solved * 15 // total)
         "easy_solved_num": easy_solved,
         "medium_solved_num": medium_solved,
         "hard_solved_num": hard_solved,
-        
-        "total_easy": total_questions_data.get("Easy", 1), # Avoid division by zero
-        "total_medium": total_questions_data.get("Medium", 1),
-        "total_hard": total_questions_data.get("Hard", 1),
-        "total_questions": total_questions_data.get("All", 1),
-
-        # Formatted strings for display
-        # We use :03d or :>3 to ensure numbers look like '042' or ' 42' for terminal alignment
-        "easy_solved_str": f"{easy_solved:03d}",
-        "medium_solved_str": f"{medium_solved:03d}",
-        "hard_solved_str": f"{hard_solved:03d}",
+        "total_easy": total_map.get("Easy", 1),
+        "total_medium": total_map.get("Medium", 1),
+        "total_hard": total_map.get("Hard", 1),
+        "total_questions": total_map.get("All", 1),
+        "easy_solved_str": f"{easy_solved:>3}",
+        "medium_solved_str": f"{medium_solved:>3}",
+        "hard_solved_str": f"{hard_solved:>3}",
         "total_solved_str": str(total_solved),
     }
-
 def render_svg_card(stats: dict, theme: dict) -> str:
     """Takes the stats and a theme, then renders the SVG card."""
     parsed_data = parse_stats_data(stats)
