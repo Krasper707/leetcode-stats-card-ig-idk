@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Response, Query
+from fastapi import FastAPI, HTTPException, Response
 from typing import Optional
 
 # Keep your existing imports
@@ -11,55 +11,39 @@ app = FastAPI(
 )
 
 @app.get("/api/stats/{username}")
-async def get_user_stats_card(
-    username: str, 
-    theme: str = Query(default="default") # Use Query for better documentation
-):
+async def get_user_stats_card(username: str, theme: Optional[str] = "default"):
     """
     An endpoint to get a LeetCode stats SVG card for a specific user.
+    Supports themes via the ?theme= query parameter (e.g., ?theme=amber).
     """
     
+    # --- 1. ANALYTICS LOGGING ---
+    # This prints to Vercel logs. You can filter logs later for "STATS_REQUEST_FOR"
+    # to count how many unique users are using your tool.
+    print(f"STATS_REQUEST_FOR: {username}")
+    
+    # Fetch stats
     stats = fetch_leetcode_stats(username)
     
-    # Improved Error Handling
-    if not stats:
-         raise HTTPException(status_code=503, detail="LeetCode API is currently unreachable.")
+    if not stats or not stats.get('matchedUser'):
+        raise HTTPException(status_code=404, detail="User not found or LeetCode API error.")
+        
+    # Theme selection logic
+    selected_theme = THEMES.get(theme, THEMES["default"])
     
-    if not stats.get('matchedUser'):
-        raise HTTPException(status_code=404, detail=f"User '{username}' not found.")
-
-    # THEME SELECTION
-    if theme not in THEMES:
-        theme = "default"
-    selected_theme_config = THEMES[theme]
-
-    user_data = stats['matchedUser']
-    submit_stats = user_data['submitStatsGlobal']['acSubmissionNum']
+    # Render SVG
+    svg_card = render_svg_card(stats, selected_theme)
     
-    processed_stats = {
-        "username": username,
-        "rank": user_data['profile']['ranking'],
-        "total_questions": stats['allQuestionsCount'][0]['count'],
-        "total_easy": stats['allQuestionsCount'][1]['count'],
-        "total_medium": stats['allQuestionsCount'][2]['count'],
-        "total_hard": stats['allQuestionsCount'][3]['count'],
-        "total_solved_num": submit_stats[0]['count'],
-        "easy_solved_num": submit_stats[1]['count'],
-        "medium_solved_num": submit_stats[2]['count'],
-        "hard_solved_num": submit_stats[3]['count'],
-    }
-
-    # RENDER SVG
-    svg_card = render_svg_card(processed_stats, selected_theme_config)
-
-    # OPTIMIZED HEADERS FOR GITHUB
-    headers = {
-        "Content-Type": "image/svg+xml",
-        "Cache-Control": "public, max-age=7200, s-maxage=14400, stale-while-revalidate=3600",
-        "Pragma": "no-cache",
-        "Expires": "0",
-    }
+    # --- 2. VERCEL EDGE CACHING ---
+    # We replaced your old 'no-cache' headers.
+    # public: Allows Vercel CDN to cache it.
+    # max-age=14400: Browser caches it for 4 hours.
+    # s-maxage=14400: Vercel CDN caches it for 4 hours.
     
-    print(f"Successfully generated card for: {username} [Theme: {theme}]")
-    
-    return Response(content=svg_card, media_type="image/svg+xml", headers=headers)
+    return Response(
+        content=svg_card, 
+        media_type="image/svg+xml",
+        headers={
+            'Cache-Control': 'public, max-age=14400, s-maxage=14400',
+        }
+    )
