@@ -14,7 +14,7 @@ Here's how it looks with the `arch` theme:
 -->
 <p align="center">
   <img 
-    src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch" 
+    src="https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=1" 
     alt="Saurabh's LeetCode Stats"
     style="background-color: #0C0C0C; border-radius: 6px;"
   />
@@ -55,7 +55,7 @@ This method is recommended because it prevents the "white flash" on page load by
 
 This is simpler but may cause a white box to flash before the image loads on dark-themed READMEs.
 
-![My LeetCode Stats](https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch)
+![My LeetCode Stats](https://leetcode-stats-card-ig-idk.vercel.app/api/stats/Krasper707?theme=arch&v=1)
 
 ### 🎨 Customization & Themes
 
