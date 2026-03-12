@@ -22,7 +22,49 @@ THEMES = {
         "command": "#EFEFEF",    # A soft, off-white for user input
         "output_label": "#8F8F8F",# Dimmed grey for non-critical labels
         "output_value": "#EFEFEF", # The same soft white for data
+    },
+    # --- NEW THEMES ---
+    "dracula": {
+        "background": "#282a36", "border": "#44475a", "prompt": "#50fa7b",
+        "command": "#f1fa8c", "output_label": "#8be9fd", "output_value": "#bd93f9",
+    },
+    "nord": {
+        "background": "#2e3440", "border": "#4c566a", "prompt": "#88c0d0",
+        "command": "#d8dee9", "output_label": "#94a3b8", "output_value": "#eceff4",
+    },
+    "gruvbox": {
+        "background": "#282828", "border": "#7c6f64", "prompt": "#b8bb26",
+        "command": "#ebdbb2", "output_label": "#a89984", "output_value": "#fabd2f",
+    },
+    "cyberpunk": {
+        "background": "#000b1e", "border": "#0abdc6", "prompt": "#0abdc6",
+        "command": "#ea00d9", "output_label": "#711c91", "output_value": "#fec7d7",
+    },
+    "synthwave": {
+        "background": "#2b213a", "border": "#ff7edb", "prompt": "#36f9f6",
+        "command": "#fe4450", "output_label": "#72f1b8", "output_value": "#fede5d",
+    },
+    "monokai": {
+        "background": "#272822", "border": "#49483e", "prompt": "#a6e22e",
+        "command": "#f92672", "output_label": "#66d9ef", "output_value": "#fd971f",
+    },
+    "matrix": {
+        "background": "#000000", "border": "#003b00", "prompt": "#00ff41",
+        "command": "#008f11", "output_label": "#00ff41", "output_value": "#d1ffda",
+    },
+    "rose-pine": {
+        "background": "#191724", "border": "#403d52", "prompt": "#eb6f92",
+        "command": "#f6c177", "output_label": "#908caa", "output_value": "#e0def4",
+    },
+    "solarized-dark": {
+        "background": "#002b36", "border": "#073642", "prompt": "#859900",
+        "command": "#268bd2", "output_label": "#93a1a1", "output_value": "#eee8d5",
+    },
+    "retro-white": { # Classic 90s terminal/System 7 look
+        "background": "#ffffff", "border": "#000000", "prompt": "#000000",
+        "command": "#0000ff", "output_label": "#666666", "output_value": "#000000",
     }
+
 }
 
 # Set up Jinja2 to find our SVG file in the 'templates' folder
