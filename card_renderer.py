@@ -73,15 +73,32 @@ template = env.get_template('stats_card.svg')
 
 def parse_stats_data(stats: dict) -> dict:
     """
-    Parses the raw API data and pre-formats numbers for clean display.
+    Parses the raw API data and pre-formats it for the Terminal SVG.
     """
-    # Extract total question counts
-    total_questions_data = {item['difficulty']: item['count'] for item in stats['allQuestionsCount']}
+    # 1. Extract Rank (Handle potential missing data)
+    profile = stats.get('matchedUser', {}).get('profile', {})
+    rank = profile.get('ranking', 'N/A')
     
-    # Extract user's solved counts
-    solved_data = {item['difficulty']: item['count'] for item in stats['matchedUser']['submitStats']['acSubmissionNum']}
+    # Format rank with commas for readability (e.g., 1,234,567)
+    if isinstance(rank, int):
+        rank_str = f"{rank:,}"
+    else:
+        rank_str = str(rank)
 
-    # Get the raw numbers
+    # 2. Extract total question counts from API
+    # LeetCode usually returns a list of dicts: [{'difficulty': 'All', 'count': 3000}, ...]
+    total_questions_list = stats.get('allQuestionsCount', [])
+    total_questions_data = {item['difficulty']: item['count'] for item in total_questions_list}
+    
+    # 3. Extract user's solved counts
+    # Note: LeetCode API usually nests this under 'submitStatsGlobal' or 'submitStats'
+    user_stats = stats.get('matchedUser', {}).get('submitStatsGlobal', {}).get('acSubmissionNum', [])
+    if not user_stats: # Fallback for different API structures
+         user_stats = stats.get('matchedUser', {}).get('submitStats', {}).get('acSubmissionNum', [])
+         
+    solved_data = {item['difficulty']: item['count'] for item in user_stats}
+
+    # 4. Get the raw numbers (integers)
     easy_solved = solved_data.get("Easy", 0)
     medium_solved = solved_data.get("Medium", 0)
     hard_solved = solved_data.get("Hard", 0)
@@ -89,21 +106,24 @@ def parse_stats_data(stats: dict) -> dict:
 
     return {
         "username": stats['matchedUser']['username'],
+        "rank": rank_str,
 
-        # Pass the original, unformatted numbers for calculations
+        # Integers for SVG Bar math: (solved * 15 // total)
         "easy_solved_num": easy_solved,
         "medium_solved_num": medium_solved,
         "hard_solved_num": hard_solved,
-        "total_easy": total_questions_data.get("Easy", 0),
-        "total_medium": total_questions_data.get("Medium", 0),
-        "total_hard": total_questions_data.get("Hard", 0),
-        "total_questions": total_questions_data.get("All", 0),
+        
+        "total_easy": total_questions_data.get("Easy", 1), # Avoid division by zero
+        "total_medium": total_questions_data.get("Medium", 1),
+        "total_hard": total_questions_data.get("Hard", 1),
+        "total_questions": total_questions_data.get("All", 1),
 
-        # Pass the pre-formatted strings for display
-        "easy_solved_str": f"{easy_solved:<4}",
-        "medium_solved_str": f"{medium_solved:<4}",
-        "hard_solved_str": f"{hard_solved:<4}",
-        "total_solved_str": f"{total_solved:<4}",
+        # Formatted strings for display
+        # We use :03d or :>3 to ensure numbers look like '042' or ' 42' for terminal alignment
+        "easy_solved_str": f"{easy_solved:03d}",
+        "medium_solved_str": f"{medium_solved:03d}",
+        "hard_solved_str": f"{hard_solved:03d}",
+        "total_solved_str": str(total_solved),
     }
 
 def render_svg_card(stats: dict, theme: dict) -> str:
